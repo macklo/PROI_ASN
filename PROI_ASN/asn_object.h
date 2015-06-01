@@ -16,7 +16,7 @@ protected:
 	
 public:
 	
-	virtual bool readContent( std::istream& istr) = 0;
+	//virtual bool readContent( std::istream& istr) = 0;
 	virtual bool readAll(std::istream& istr) = 0;
 	asn_object(void);
 	~asn_object(void);
