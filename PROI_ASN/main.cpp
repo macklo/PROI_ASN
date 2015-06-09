@@ -18,6 +18,9 @@ int main(){
 	//ss<<"13044B6C6F73";
 	ss<<"301113064D616369656A13044B6C6F73020113";
 	p.readAll(ss);
+	p.writeAll(std::cout);
+	//x.readAll(ss);
+	//x.writeAll(std::cout);
 	int a = 0x0F;
 	//std::cout<<x.getValue()<<std::endl;
 	std::system("pause");
