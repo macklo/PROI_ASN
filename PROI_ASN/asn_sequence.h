@@ -9,7 +9,7 @@ class asn_sequence: public asn_object
 protected:
 	std::vector <asn_object*> elements;
 public:
-	bool readAll(std::istream& istr);
+	int readAll(std::istream& istr);
 	bool writeAll(std::ostream& ostr);
 	int getSize();
 	bool addElement(asn_object* obj);

@@ -1,13 +1,23 @@
 #include "asn_sequence.h"
 
-bool asn_sequence::readAll(std::istream& istr){
+int asn_sequence::readAll(std::istream& istr){
 	if(!checkTag(istr))
-		return false;
-	readSize(istr);
+		return -1;
+	if(!readSize(istr))
+		return -1;
+	int readOctets = 2;
 	for (std::vector<asn_object*>::iterator it = elements.begin() ; it != elements.end(); ++it){
-		(*it)->readAll(istr);
+		int x = (*it)->readAll(istr);
+		if (x<0){
+			for(int i = 0; i<readOctets; i++){
+				istr.unget();
+				istr.unget();
+			}
+			return -1;
+		}
+		readOctets =+ x;
 	}
-	return true;
+	return readOctets;
 }
 
 bool asn_sequence::writeAll(std::ostream& ostr){

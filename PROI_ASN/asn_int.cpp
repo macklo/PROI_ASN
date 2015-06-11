@@ -29,12 +29,22 @@ asn_int::asn_int(void)
 	value = 0;
 }
 
-bool asn_int::readAll(std::istream& istr){
+int asn_int::readAll(std::istream& istr){
 	if(!checkTag(istr))
-		return false;
-	readSize(istr);
+		return -1;
+	if(!readSize(istr))
+		return -1;
+	int readOctets = 2;
 	for (int i = 2*size-2; i>=0; i=i-2){
 		int x = read(istr);
+		if (x<0){
+			for(int i = 0; i<readOctets; i++){
+				istr.unget();
+				istr.unget();
+			}
+			return -1;
+		}
+		readOctets++;
 		int m =1;
 		for (int j = 0; j<i;j++){
 			m= m*16;
@@ -42,7 +52,7 @@ bool asn_int::readAll(std::istream& istr){
 
 		value = + x*m;
 	}
-	return true;
+	return readOctets;
 }
 
 bool asn_int::writeAll(std::ostream& ostr){

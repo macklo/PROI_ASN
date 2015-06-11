@@ -17,7 +17,7 @@ protected:
 	bool checkTag(std::istream& istr);
 	bool readSize( std::istream& istr);
 public:
-	virtual bool readAll(std::istream& istr) = 0;
+	virtual int readAll(std::istream& istr) = 0;
 	virtual bool writeAll(std::ostream& ostr) = 0;
 	virtual int getSize() = 0;
 	asn_object(void);

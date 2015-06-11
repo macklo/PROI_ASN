@@ -13,15 +13,26 @@ asn_string::asn_string(std::string str)
 	value = str;
 }
 
-bool asn_string::readAll(std::istream& istr){
+int asn_string::readAll(std::istream& istr){
 	if(!checkTag(istr))
-		return false;
-	readSize(istr);
+		return -1;
+	if(!readSize(istr))
+		return -1;
+	int readOctets = 2;
+
 	for (int i = 0; i<size; i++){
 		char x = read(istr);
+		if (x<0){
+			for(int i = 0; i<readOctets; i++){
+				istr.unget();
+				istr.unget();
+			}
+			return -1;
+		}
+		readOctets++;
 		value = value + x;
 	}
-	return true;
+	return readOctets;
 }
 bool asn_string::writeAll(std::ostream& ostr){
 	ostr<<int2hex(tag)<<int2hex(getSize());

@@ -17,7 +17,7 @@ int main(){
 	//ss<<"13064D616369656A";
 	//ss<<"13044B6C6F73";
 	ss<<"301113064D616369656A13044B6C6F73020113";
-	p.readAll(ss);
+	int g = p.readAll(ss);
 	p.writeAll(std::cout);
 	//x.readAll(ss);
 	//x.writeAll(std::cout);

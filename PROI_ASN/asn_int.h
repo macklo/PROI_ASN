@@ -16,7 +16,7 @@ public:
 	int getValue();
 	int getSize();
 
-	bool readAll(std::istream& istr);
+	int readAll(std::istream& istr);
 	bool writeAll(std::ostream& ostr);
 	asn_int(void);
 	~asn_int(void);

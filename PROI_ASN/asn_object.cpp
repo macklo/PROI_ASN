@@ -22,14 +22,26 @@ std::string asn_object::int2hex(int n){
 
 int asn_object::read(std::istream& istr){
 	char c1, c2;
-	istr>>c1>>c2;
-	if(!isxdigit(c1) || !isxdigit(c2))
-		return 1;
+	if(!(istr>>c1)){
+		//istr.unget();
+		return -1;
+	}
+	if(!(istr>>c2)){
+		//istr.unget();
+		istr.unget();
+		return -1;
+	}
+	if(!isxdigit(c1) || !isxdigit(c2)){
+		istr.unget();
+		istr.unget();
+		return -1;
+	}
 	return hex2int(c1)*16 + hex2int(c2);
 }
 
 bool asn_object::checkTag(std::istream& istr){
 	int rtag = read(istr);
+	if( rtag < 0) return false;
 	if(rtag != tag){
 		istr.unget();
 		istr.unget();
@@ -41,6 +53,7 @@ bool asn_object::checkTag(std::istream& istr){
 
 bool asn_object::readSize(std::istream& istr){
 	int rsize = read(istr);
+	if( rsize < 0) return false;
 	if (rsize>127){
 		for(int i = 0 ; i<4;i++)
 		istr.unget();

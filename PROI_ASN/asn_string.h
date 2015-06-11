@@ -10,7 +10,7 @@ private:
 	std::string value;
 
 public:
-	bool readAll(std::istream& istr);
+	int readAll(std::istream& istr);
 	bool writeAll(std::ostream& ostr);
 	int getSize();
 	asn_string(void);
