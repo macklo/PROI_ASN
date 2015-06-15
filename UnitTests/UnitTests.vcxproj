@@ -51,7 +51,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\Users\USER\Documents\GitHub\PROI_ASN\PROI_ASN;C:\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Maciek\Documents\GitHub\PROI_ASN\PROI_ASN;C:\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,6 +85,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="asn_int_test.cpp" />
+    <ClCompile Include="asn_personTest.cpp" />
+    <ClCompile Include="asn_sequenceTest.cpp" />
+    <ClCompile Include="asn_stringTest.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UnitTests.cpp" />
   </ItemGroup>

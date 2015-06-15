@@ -1,4 +1,6 @@
 #include "asn_sequence.h"
+#include "asn_int.h"
+#include "asn_string.h"
 
 int asn_sequence::readAll(std::istream& istr){
 	if(!checkTag(istr))
@@ -6,26 +8,81 @@ int asn_sequence::readAll(std::istream& istr){
 	if(!readSize(istr))
 		return -1;
 	int readOctets = 2;
-	for (std::vector<asn_object*>::iterator it = elements.begin() ; it != elements.end(); ++it){
-		int x = (*it)->readAll(istr);
-		if (x<0){
-			for(int i = 0; i<readOctets; i++){
-				istr.unget();
-				istr.unget();
+	int charleft = size;
+	if(elements.empty()){
+		while (charleft > 0){
+			int tmptag = read(istr), x;
+			if (tmptag < 0) {
+				istr.clear();
+				istr.seekg(0);
+				writeable = 0;
+				return -1;
 			}
-			return -1;
+			istr.unget();
+			istr.unget();
+			if(tmptag==2){
+				asn_int *tmpi = new asn_int;
+				x = tmpi->readAll(istr);
+				if(x <0) return -1;
+				charleft = charleft-x;
+				readOctets += x;
+				addElement(tmpi);
+			}
+			else if(tmptag==19){
+				asn_string *tmps = new asn_string;
+				x = tmps->readAll(istr);
+				if(x <0) return -1;
+				charleft = charleft-x;
+				readOctets += x;
+				addElement(tmps);
+			}
+			else if(tmptag==48){
+				asn_sequence *tmpss = new asn_sequence;
+				x = tmpss->readAll(istr);
+				if(x <0) return -1;
+				charleft =charleft-x;
+				readOctets += x;
+				addElement(tmpss);
+			}
+			else{
+				istr.clear();
+				istr.seekg(0);
+				writeable = 0;
+				return -1;
+			}
 		}
-		readOctets =+ x;
+		writeable = 1;
+		return readOctets;
 	}
-	return readOctets;
+	else{
+		for (std::vector<asn_object*>::iterator it = elements.begin() ; it != elements.end(); ++it){
+			int x = (*it)->readAll(istr);
+			if (x<0){
+				istr.clear();
+				istr.seekg(0);
+				/*
+				for(int i = 0; i<readOctets; i++){
+					istr.unget();
+					istr.unget();
+				}*/
+				return -1;
+			}
+			readOctets += x;
+		}
+		writeable = 1;
+		return readOctets;
+	}
 }
 
 bool asn_sequence::writeAll(std::ostream& ostr){
-	ostr<<int2hex(tag)<<int2hex(getSize());
-	for (std::vector<asn_object*>::iterator it = elements.begin() ; it != elements.end(); ++it){
-		(*it)->writeAll(ostr);
+	if(writeable){
+		ostr<<int2hex(tag)<<int2hex(getSize());
+		for (std::vector<asn_object*>::iterator it = elements.begin() ; it != elements.end(); ++it){
+			(*it)->writeAll(ostr);
+		}
+		return true;
 	}
-	return true;
+	else return 0;
 }
 
 int asn_sequence::getSize(){
@@ -45,6 +102,7 @@ bool asn_sequence::addElement(asn_object* obj){
 asn_sequence::asn_sequence(void)
 {
 	tag = 48;
+	writeable = 0;
 }
 
 

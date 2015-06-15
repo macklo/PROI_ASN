@@ -43,8 +43,8 @@ bool asn_object::checkTag(std::istream& istr){
 	int rtag = read(istr);
 	if( rtag < 0) return false;
 	if(rtag != tag){
-		istr.unget();
-		istr.unget();
+		istr.clear();
+		istr.seekg(0);
 		return false;
 	}
 	else
@@ -53,10 +53,22 @@ bool asn_object::checkTag(std::istream& istr){
 
 bool asn_object::readSize(std::istream& istr){
 	int rsize = read(istr);
-	if( rsize < 0) return false;
+	if( rsize < 0) {
+		istr.clear();
+		istr.seekg(0);
+		return false;
+	}
 	if (rsize>127){
+		/*
 		for(int i = 0 ; i<4;i++)
-		istr.unget();
+			istr.unget();*/
+		/*
+		std::string tmp;
+		istr>>tmp;
+		std::cout<<tmp<<std::endl;
+		*/
+		istr.clear();
+		istr.seekg(0, std::ios::beg);
 		return false;
 	}
 	size = rsize;

@@ -6,6 +6,7 @@ asn_person::asn_person(void)
 	elements.push_back(&imie);
 	elements.push_back(&nazwisko);
 	elements.push_back(&wiek);
+	elements.push_back(&friends);
 }
 
 
