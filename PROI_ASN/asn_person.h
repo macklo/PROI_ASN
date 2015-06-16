@@ -13,8 +13,8 @@ class asn_person : public asn_sequence
 private:
 	asn_string imie; //!<Imiê osoby
 	asn_string nazwisko; //!<Nazwisko osoby
-	asn_int wiek; //!<<Wiek osoby
-	asn_sequence friends; //!Lista przyjació³ osoby
+	asn_int wiek; //!<Wiek osoby
+	asn_sequence friends; //!<Lista przyjació³ osoby
 public:
 	asn_person(void);
 	~asn_person(void);

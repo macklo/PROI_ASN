@@ -48,5 +48,11 @@
     <ClInclude Include="asn_person.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="invertable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="showable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

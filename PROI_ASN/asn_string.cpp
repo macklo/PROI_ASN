@@ -16,8 +16,21 @@ asn_string::asn_string(std::string str)
 }
 
 void asn_string::setValue(std::string str){
-	value = str;
-	writeable = 1;
+	if (str =="") writeable = 0;
+	else{
+		value = str;
+		writeable = 1;
+	}
+}
+
+std::string asn_string::getString(){
+	if(writeable) return value;
+	else return "";
+}
+
+void asn_string::show(){
+	if (writeable) std::cout<<"Obiekt string, zawartosc:"<<value<<std::endl;
+	else std::cout<<"Obiekt int, obiekt jest pusty"<<std::endl;
 }
 
 int asn_string::readAll(std::istream& istr){

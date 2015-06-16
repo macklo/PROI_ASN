@@ -1,12 +1,4 @@
 #include "asn_int.h"
-/*
-int power(int x, int w){
-	int wyn = 1;
-	for (int i = 0; i<2;i++){
-		wyn = wyn*x;
-	}
-	return wyn;
-}*/
 
 void asn_int::setValue(int x){
 	value = x;
@@ -20,9 +12,19 @@ int asn_int::getValue(){
 
 int asn_int::getSize(){
 	std::string tmp = int2hex(value);
-	//std::cout<<tmp<<std::endl;
 	size = tmp.size() / 2;
 	return size;
+}
+
+double asn_int::invert(){
+	if (writeable && value != 0) return 1/value;
+	else return 0;
+	
+}
+
+void asn_int::show(){
+	if (writeable) std::cout<<"Obiekt int, wartosc:"<<value<<std::endl;
+	else std::cout<<"Obiekt int, obiekt jest pusty"<<std::endl;
 }
 
 asn_int::asn_int(void)

@@ -5,7 +5,24 @@
 #include "asn_string.h"
 
 
-TEST(tetsASN_string, GoodDataFromStream){
+TEST(testASN_string, DeafultCostructorTest){
+	asn_string x;
+	EXPECT_EQ("", x.getString());
+}
+
+TEST(testASN_string, CostructorTest){
+	std::string str = "TestowyString";
+	asn_string x(str);
+	EXPECT_EQ(str, x.getString());
+}
+
+TEST(testASN_string, getSizeTest){
+	std::string str = "TestowyString";
+	asn_string x(str);
+	EXPECT_EQ(str.size(), x.getSize());
+}
+
+TEST(testASN_string, GoodDataFromStream){
 	asn_string x;
 	std::stringstream ss;
 	std::string str= "13044B756261";
@@ -17,7 +34,7 @@ TEST(tetsASN_string, GoodDataFromStream){
 	EXPECT_EQ("", tmp);
 }
 
-TEST(tetsASN_string, ShortDataFromStream){
+TEST(testASN_string, ShortDataFromStream){
 	asn_string x;
 	std::stringstream ss;
 	std::string str= "1304";
@@ -29,7 +46,7 @@ TEST(tetsASN_string, ShortDataFromStream){
 	EXPECT_EQ(str, tmp);
 }
 
-TEST(tetsASN_string, WrongTagFromStream){
+TEST(testASN_string, WrongTagFromStream){
 	asn_string x;
 	std::stringstream ss;
 	std::string str= "14044B756261";

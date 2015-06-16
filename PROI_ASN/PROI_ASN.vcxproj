@@ -74,6 +74,8 @@
     <ClInclude Include="asn_person.h" />
     <ClInclude Include="asn_sequence.h" />
     <ClInclude Include="asn_string.h" />
+    <ClInclude Include="invertable.h" />
+    <ClInclude Include="showable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
